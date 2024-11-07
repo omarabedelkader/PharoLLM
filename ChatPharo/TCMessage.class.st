@@ -7,7 +7,7 @@ Class {
 		'separator',
 		'teapotServer'
 	],
-	#category : 'ChatPharo'
+	#category : #ChatPharo
 }
 
 { #category : #'instance creation' }
@@ -18,8 +18,8 @@ TCMessage class >> from: aSender text: aText [
 { #category : #'instance creation' }
 TCMessage class >> fromString: aString [
 	^ self new
-	fromString: aString;
-	yourself
+		fromString: aString;
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -34,7 +34,7 @@ TCMessage >> fromString: aString [
 { #category : #accessing }
 TCMessage >> initialize [ 
 	super initialize.
-	separator := '>'
+	separator := '>'.
 ]
 
 { #category : #accessing }

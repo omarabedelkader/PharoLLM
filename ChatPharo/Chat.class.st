@@ -9,7 +9,7 @@ Class {
 		'console',
 		'lastMessageIndex'
 	],
-	#category : 'ChatPharo'
+	#category : #ChatPharo
 }
 
 { #category : #'as yet unclassified' }
@@ -45,10 +45,20 @@ Chat >> command: aPath argument: anArgument [
 	^'{1}{2}/{3}' format: { url . aPath . anArgument asString }
 ]
 
+{ #category : #accessing }
+Chat >> console [ 
+	^console 
+]
+
 { #category : #initialization }
 Chat >> disconnect [
 	self sendNewMessage: (TCMessage from: login text: 'I exited from the chat room.').
 	exit := true
+]
+
+{ #category : #accessing }
+Chat >> exit [ 
+	^ exit
 ]
 
 { #category : #'as yet unclassified' }
@@ -63,6 +73,22 @@ Chat >> initialize [
 	exit := false.
 	lastMessageIndex := 0.
 	messages := OrderedCollection new.
+]
+
+{ #category : #accessing }
+Chat >> lastMessageIndex [
+	^ lastMessageIndex 	
+]
+
+{ #category : #accessing }
+Chat >> login [ 
+	^login 
+	
+]
+
+{ #category : #accessing }
+Chat >> messages [ 	
+	^ messages
 ]
 
 { #category : #initialization }
@@ -124,4 +150,9 @@ Chat >> start [
 	self sendNewMessage: (TCMessage from: login text: 'I joined the chat room').
 	lastMessageIndex := self readLastMessageID.
 	self refreshMessages.
+]
+
+{ #category : #accessing }
+Chat >> url [ 
+	^url
 ]

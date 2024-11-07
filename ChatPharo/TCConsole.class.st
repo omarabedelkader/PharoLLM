@@ -1,6 +1,6 @@
 Class {
 	#name : #TCConsole,
-	#superclass : #Object,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'chat',
 		'list',
@@ -20,7 +20,7 @@ TCConsole class >> attach: aTinyChat [
 { #category : #'as yet unclassified' }
 TCConsole class >> defaultSpec [
 	<spec: #default>
-	^ SpBoxLayout composed
+	^ SpecLayout composed
 		newColumn: [ :c | c add: #list; add: #input height: 30 ]; yourself
 ]
 
