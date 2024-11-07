@@ -1,29 +1,28 @@
 Class {
-	#name : 'TCMessage',
-	#superclass : 'Object',
+	#name : #TCMessage,
+	#superclass : #Object,
 	#instVars : [
 		'sender',
 		'text',
 		'separator',
 		'teapotServer'
 	],
-	#category : 'ChatPharo',
-	#package : 'ChatPharo'
+	#category : 'ChatPharo'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TCMessage class >> from: aSender text: aText [
 	^ self new sender: aSender; text: aText; yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TCMessage class >> fromString: aString [
 	^ self new
 	fromString: aString;
 	yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TCMessage >> fromString: aString [
 	"Compose a message from a string of this form 'sender>message'."
 	| items |
@@ -32,35 +31,35 @@ TCMessage >> fromString: aString [
 	self text: items second.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> initialize [ 
 	super initialize.
 	separator := '>'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> printOn: aStream [
 	aStream
 	<< self sender; << separator;
 	<< self text; << String crlf
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> sender [
 	^sender
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> sender: anObject [
 	^sender := anObject 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> text [
 	^text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCMessage >> text: anObject [
 	^text := anObject
 ]

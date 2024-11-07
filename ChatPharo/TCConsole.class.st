@@ -1,16 +1,15 @@
 Class {
-	#name : 'TCConsole',
-	#superclass : 'Object',
+	#name : #TCConsole,
+	#superclass : #Object,
 	#instVars : [
 		'chat',
 		'list',
 		'input'
 	],
-	#category : 'ChatPharo',
-	#package : 'ChatPharo'
+	#category : #ChatPharo
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 TCConsole class >> attach: aTinyChat [
 	| window |
 	window := self new chat: aTinyChat.
@@ -18,29 +17,46 @@ TCConsole class >> attach: aTinyChat [
 	^ window
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 TCConsole class >> defaultSpec [
 	<spec: #default>
 	^ SpBoxLayout composed
 		newColumn: [ :c | c add: #list; add: #input height: 30 ]; yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCConsole >> chat: anObject [
 	chat := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #initialization }
+TCConsole >> initializeWidgets [
+	list := ListModel new.
+	input := TextInputFieldModel new
+	ghostText: 'Type your message here...';
+	enabled: true;
+	acceptBlock: [ :string |
+		chat send: string.
+		input text: '' ].
+	self focusOrder add: input.
+]
+
+{ #category : #accessing }
 TCConsole >> input [ 
 	^ input
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCConsole >> list [ 
 	^ list
 ]
 
-{ #category : 'accessing' }
+{ #category : #initialization }
+TCConsole >> print: aCollectionOfMessages [
+	list items: (aCollectionOfMessages collect: [ :m | m printString])
+]
+
+{ #category : #accessing }
 TCConsole >> title [ 
 	^ 'ChatPharo'
 ]

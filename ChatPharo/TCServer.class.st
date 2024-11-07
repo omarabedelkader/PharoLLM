@@ -1,15 +1,14 @@
 Class {
-	#name : 'TCServer',
-	#superclass : 'Object',
+	#name : #TCServer,
+	#superclass : #Object,
 	#instVars : [
 		'teapotServer',
 		'messagesQueue'
 	],
-	#category : 'ChatPharo',
-	#package : 'ChatPharo'
+	#category : 'ChatPharo'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 TCServer class >> startOn: aPortNumber [
 	^self new
 		initializePort: aPortNumber;
@@ -18,23 +17,23 @@ TCServer class >> startOn: aPortNumber [
 		yourself
 ]
 
-{ #category : 'registration' }
+{ #category : #registration }
 TCServer class >> stopAll [
 	self allInstancesDo: #stop
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 TCServer >> addMessage: aRequest [
 	messagesQueue add: (TCMessage from: (aRequest at: #sender) text:(aRequest at: #text)).
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TCServer >> initialize [
 	super initialize.
 	messagesQueue := TCMessageQueue new.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TCServer >> initializePort: anInteger [
 	teapotServer := Teapot configure: {
 		#defaultOutput -> #text.
@@ -44,28 +43,28 @@ TCServer >> initializePort: anInteger [
 	teapotServer start.
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 TCServer >> messageCount [
 	^ messagesQueue size
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 TCServer >> messagesFrom: request [
 	^ messagesQueue formattedMessagesFrom: (request at: #id)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCServer >> messagesQueue [
 	^ messagesQueue
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TCServer >> registerErrorHandlers [
 	teapotServer
 		exception: KeyNotFound -> (TeaResponse notFound body: 'No such message')
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 TCServer >> registerRoutes [
 	teapotServer
 		GET: '/messages/count' -> (Send message: #messageCount to: self);
@@ -73,13 +72,13 @@ TCServer >> registerRoutes [
 		POST: '/messages/add' -> (Send message: #addMessage: to: self)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCServer >> stop [
 	teapotServer stop.
 	messagesQueue reset.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 TCServer >> teapotServer [
 	^ teapotServer
 ]
